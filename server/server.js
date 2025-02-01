@@ -3,10 +3,10 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-
-
 const app = express();
 const port = process.env.PORT || 5000;
+const authRouter = require('./routes/auth/auth-routes');
+
 
 dotenv.config();
 
@@ -31,6 +31,7 @@ app.use(cors({
 }))
 app.use(cookieParser());
 app.use(express.json());
+app.use('/api/auth' , authRouter);
 
 
 

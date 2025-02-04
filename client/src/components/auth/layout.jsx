@@ -12,7 +12,7 @@ const AuthLayout = () => {
                 <div className='max-w-md space-y-6 text-primary-foreground z-10'>
                     <div className='bg-transparent p-8 rounded-lg'>
                         <h1 className='text-5xl font-extrabold tracking-tight absolute top-10 left-10'>
-                            <span className='text-green-400'>Welcome</span>{' '}
+                            <span className='text-green-500'>Welcome</span>{' '}
                             <span className='text-slate-900'>To</span>{' '}
                             <span className='text-slate-600'>Gebeya</span>
                         </h1>

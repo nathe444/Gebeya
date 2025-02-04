@@ -15,12 +15,11 @@ import ShoppingCheckout from "./pages/shopping-view/Checkout"
 import ShoppingAccount from "./pages/shopping-view/Account"
 import CheckAuth from "./components/common/CheckAuth"
 import Unauth from "./pages/Unauth"
+import { useSelector } from "react-redux"
 
 function App() {
 
-  const isAuthenticated = false
-  const user = null
-
+  const {isAuthenticated , user} = useSelector((state)=>state.auth)
 
   return (
     <div className="flex flex-col overflow-hidden bg-background w-full h-screen" >

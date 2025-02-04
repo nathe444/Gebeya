@@ -2,6 +2,8 @@ import CommonForm from '@/components/common/Form'
 import  {loginFormControls}  from '@/config/index'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '@/store/auth-slice'
 
 const initialState = {
     email : '',
@@ -10,9 +12,17 @@ const initialState = {
 
 const Login = () => {
     const [formData, setFormData] = useState(initialState)
-    const onSubmit = (data) => {
-        
+    const loading = useSelector((state)=>state.auth.loading)
+    const dispatch = useDispatch();  
+
+    const onSubmit = (event) => {
+      event.preventDefault();
+      dispatch(login(formData)).then((data)=>{
+        console.log(data)
+      })
     }
+
+
   return (
     <div className='mx-auto w-full max-w-md space-y-6'> 
         <div className='text-center'>
@@ -21,7 +31,7 @@ const Login = () => {
         </div>
         <CommonForm 
         formControls={loginFormControls}
-        buttonText={'Sign In'}
+        buttonText={loading?'Sign In...' : 'Sign In'}
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}

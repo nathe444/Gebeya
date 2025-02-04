@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 const register = async (req, res) => {
     const { userName, email, password } = req.body;
 
-    // Validate userName is not empty
     if (!userName || userName.trim() === '') {
         return res.status(400).json({
             success: false,
@@ -14,13 +13,12 @@ const register = async (req, res) => {
     }
 
     try {
-        // Check if user already exists
         const existingUser = await User.findOne({ $or: [{ email }, { userName }] });
         if (existingUser) {
             return res.status(400).json({
                 success: false,
-                message: existingUser.email === email 
-                    ? "User with this email already exists" 
+                message: existingUser.email === email
+                    ? "User with this email already exists"
                     : "Username is already taken"
             });
         }
@@ -48,7 +46,43 @@ const register = async (req, res) => {
 
 
 const login = async (req, res) => {
+    const { email, password } = req.body;
     try {
+        const existingUser = await User.findOne({ email });
+        if (!existingUser) {
+            return res.status(400).json({
+                success: false,
+                message: "A User with this email does not exist"
+            })
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
+        if (!isPasswordCorrect) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid password"
+            })
+        }
+
+        const token = jwt.sign({
+            email: existingUser.email,
+            id: existingUser._id,
+            role: existingUser.role
+        },'CLIENT_SECRET_KEY' , {expiresIn: "1h"})
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: false,
+        }).json({
+            success: true,
+            message: "Logged in successfully",
+            user:{
+                email: existingUser.email,
+                id: existingUser._id,
+                role: existingUser.role
+            }
+        })
+
 
     } catch (error) {
         console.log(error);
@@ -63,5 +97,6 @@ const login = async (req, res) => {
 
 
 module.exports = {
-    register
+    register,
+    login
 }

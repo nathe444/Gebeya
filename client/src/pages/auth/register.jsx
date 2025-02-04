@@ -4,7 +4,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { register } from '@/store/auth-slice/index'
 import { useDispatch } from 'react-redux'
-import { useToast } from '@/hooks/use-toast'
+import { useSelector } from 'react-redux';
 
 const initialState = {
   userName: '',
@@ -16,21 +16,16 @@ const Register = () => {
   const [formData, setFormData] = useState(initialState)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {toast} = useToast();
-
-  console.log(formData);
+  const loading = useSelector((state) => state.auth.loading);
+  // console.log(formData);
 
   const onSubmit = (event) => {
     event.preventDefault();
     dispatch(register(formData)).then((data)=>{
-      if(data?.payload?.success){
-        toast({
-          title: data?.payload?.message,
-          message: 'Account created successfully',
-          type: 'success',
-        })
+      // console.log(data)
+      if(data?.payload?.success){  
         navigate('/auth/login')
-      }
+      } 
     });
   }
   return (
@@ -41,7 +36,7 @@ const Register = () => {
       </div>
       <CommonForm
         formControls={registerFormControls}
-        buttonText={'Sign Up'}
+        buttonText={loading?'Sign up...' : 'Sign Up'}
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}

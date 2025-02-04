@@ -12,7 +12,7 @@ const initialState = {
 
 const Login = () => {
     const [formData, setFormData] = useState(initialState)
-    const loading = useSelector((state)=>state.auth.loading)
+    const {submitting} = useSelector((state)=>state.auth)
     const dispatch = useDispatch();  
 
     const onSubmit = (event) => {
@@ -31,7 +31,7 @@ const Login = () => {
         </div>
         <CommonForm 
         formControls={loginFormControls}
-        buttonText={loading?'Sign In...' : 'Sign In'}
+        buttonText={submitting ?'Sign In...' : 'Sign In'}
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}

@@ -5,8 +5,9 @@ import axios from 'axios';
 
 const initialState = {
     isAuthenticated: false,
-    loading: false,
-    user: null
+    loading: true,
+    user: null,
+    submitting : false
 }
 
 export const register = createAsyncThunk('auth/register',
@@ -53,6 +54,19 @@ export const login = createAsyncThunk('auth/login',
     }
 )
 
+export const checkAuth = createAsyncThunk('auth/checkAuth',
+    async()=>{
+        const response = await axios.get('http://localhost:5000/api/auth/check-auth', {
+            withCredentials: true,
+            headers:{
+                'Cache-Control': 'no-store , no-cache , must-revalidate ,proxy-revalidate',
+                Expires : '0'
+            }
+        });
+        return response.data
+    }
+)
+
 
 const authSlice = createSlice({
     name: "auth",
@@ -67,7 +81,8 @@ const authSlice = createSlice({
             state.loading = false;
         })
         .addCase(register.pending, (state, action) => {
-            state.loading = true;
+            state.loading = false;
+            state.submitting = true;
         })
        . addCase(register.rejected, (state, action) => {
             state.loading = false;
@@ -76,7 +91,8 @@ const authSlice = createSlice({
         })
         .addCase(login.pending, (state, action) => {
             state.isAuthenticated = false,
-            state.loading = true,
+            state.loading = false,
+            state.submitting = true;
             state.user = null
         })
         .addCase(login.fulfilled, (state, action) => {
@@ -85,6 +101,21 @@ const authSlice = createSlice({
             state.user = action.payload?.success ?  action.payload?.user : null 
         })
         .addCase(login.rejected, (state, action) => {
+            state.isAuthenticated = false,
+            state.loading = false,
+            state.user = null
+        })
+        .addCase(checkAuth.pending, (state, action) => {
+            state.isAuthenticated = false,
+            state.loading = true,
+            state.user = null
+        })
+        .addCase(checkAuth.fulfilled, (state, action) => {
+            state.isAuthenticated = action.payload?.success ? true : false,
+            state.loading = false,
+            state.user = action.payload?.success ?  action.payload?.user : null 
+        })
+        .addCase(checkAuth.rejected, (state, action) => {
             state.isAuthenticated = false,
             state.loading = false,
             state.user = null

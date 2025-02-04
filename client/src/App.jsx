@@ -15,11 +15,28 @@ import ShoppingCheckout from "./pages/shopping-view/Checkout"
 import ShoppingAccount from "./pages/shopping-view/Account"
 import CheckAuth from "./components/common/CheckAuth"
 import Unauth from "./pages/Unauth"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { checkAuth } from "./store/auth-slice"
+import { Skeleton } from "./components/ui/skeleton"
 
 function App() {
 
-  const {isAuthenticated , user} = useSelector((state)=>state.auth)
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.auth.loading)
+
+  useEffect(() => {
+    dispatch(checkAuth())
+  }, [dispatch])
+
+  const { isAuthenticated, user } = useSelector((state) => state.auth)
+
+
+  if (loading) {
+    return (
+      <Skeleton className="h-96 w-1/2" />
+    )
+  }
 
   return (
     <div className="flex flex-col overflow-hidden bg-background w-full h-screen" >
@@ -55,7 +72,7 @@ function App() {
           <Route path="account" elemnt={<ShoppingAccount />} />
         </Route>
 
-        <Route path='unauth-page' element={<Unauth/>}/>
+        <Route path='unauth-page' element={<Unauth />} />
         <Route path='*' element={<NotFound />} />
 
       </Routes>

@@ -16,8 +16,8 @@ const Register = () => {
   const [formData, setFormData] = useState(initialState)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const loading = useSelector((state) => state.auth.loading);
-  // console.log(formData);
+  const {submitting} = useSelector((state) => state.auth);
+
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -36,7 +36,7 @@ const Register = () => {
       </div>
       <CommonForm
         formControls={registerFormControls}
-        buttonText={loading?'Sign up...' : 'Sign Up'}
+        buttonText={submitting ?'Sign up...' : 'Sign Up'}
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}

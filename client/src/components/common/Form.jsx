@@ -13,6 +13,7 @@ const CommonForm = ({ formControls , formData , setFormData, onSubmit ,buttonTex
         switch (controlItem.componentType) {
             case 'input':
                  element = (<Input
+                    className='mb-2 placeholder:text-sm placeholder:text-slate-500'
                     name={controlItem.name}
                     placeholder={controlItem.placeholder}
                     id={controlItem.name}

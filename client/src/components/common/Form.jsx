@@ -1,8 +1,9 @@
 import React from 'react'
 import { Input } from '../ui/input';
-import { Select, SelectItem } from '../ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
+import { Textarea } from '../ui/textarea';
 
 const CommonForm = ({ formControls , formData , setFormData, onSubmit ,buttonText}) => {
 
@@ -22,7 +23,7 @@ const CommonForm = ({ formControls , formData , setFormData, onSubmit ,buttonTex
                 break;
 
             case 'textarea':
-                 element =  (<Textarea 
+                 element =  (<Textarea
                     name={controlItem.name}
                     placeholder={controlItem.placeholder}
                     id={controlItem.id}
@@ -41,8 +42,8 @@ const CommonForm = ({ formControls , formData , setFormData, onSubmit ,buttonTex
                                 controlItem.options &&
                                 controlItem.options.map(optionItem => <SelectItem
                                     key={optionItem.id}
-                                    value={optionItem}>
-                                    {optionItem.id}</SelectItem>)
+                                    value={optionItem.id}>
+                                    {optionItem.label}</SelectItem>)
                             }
                         </SelectContent>
                     </Select>

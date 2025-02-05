@@ -3,7 +3,7 @@ import { Button } from '../ui/button'
 
 const AdminHeader = ({setOpen}) => {
   return (
-    <header className='flex justiy-between items-center px-3 py-3'>
+    <header className='flex justiy-between items-center px-6 py-3'>
       <Button className="lg:hidden " onClick={() => setOpen(true)}>
         <AlignJustify/>
         <span className='sr-only'>Toggle Menu</span>

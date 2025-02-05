@@ -8,7 +8,7 @@ const AdminLayout = () => {
   const [open , setOpen] = useState(false);
 
   return (
-    <div className=' flex min-h-screen w-full' >
+    <div className=' flex min-h-screen w-full ' >
         <AdminSideBar open = {open} setOpen = {setOpen}/>
         <div className='flex flex-1 flex-col'>
             <AdminHeader setOpen = {setOpen}/>

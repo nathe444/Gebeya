@@ -10,7 +10,7 @@ import CommonForm from "@/components/common/Form";
 import { addProductFormElements } from "@/config";
 import ImageUpload from "@/components/admin-view/image-upload";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import {
   addProduct,
   fetchAllProducts,

@@ -138,7 +138,8 @@ const deleteProduct = async (req, res)=>{
         }
         res.json({
             success: true,
-            message: "Product deleted successfully"
+            message: "Product deleted successfully",
+            product
         })
     } catch (e) {
         console.log(e);

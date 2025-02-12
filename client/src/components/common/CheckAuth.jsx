@@ -4,7 +4,7 @@ import { Navigate, useLocation } from 'react-router-dom'
 const CheckAuth = ({ isAuthenticated, user, children }) => {
    
     const location = useLocation();
-    console.log(location)
+    // console.log(location)
 
     // Allow access to register page for unauthenticated users
     if (!isAuthenticated &&

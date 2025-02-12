@@ -71,6 +71,27 @@ const AdminProductSlice = createSlice({
         .addCase(addProduct.rejected,(state,action)=>{
             state.loading = false
         })
+        .addCase(editProduct.fulfilled,(state,action)=>{
+            state.products = state.products.map((product)=>product._id === action.payload.product._id ? action.payload.product : product)
+            state.loading = false
+        })
+        .addCase(editProduct.pending,(state,action)=>{
+            state.loading = true
+        })
+        .addCase(editProduct.rejected,(state,action)=>{
+            state.loading = false
+        })
+        .addCase(deleteProduct.fulfilled,(state,action)=>{
+            console.log(action.payload)
+            state.products = state.products.filter((product)=>product?._id !== action.payload.product?._id)
+            state.loading = false
+        })
+        .addCase(deleteProduct.pending,(state,action)=>{
+            state.loading = true
+        })
+        .addCase(deleteProduct.rejected,(state,action)=>{
+            state.loading = false
+        })
     }
 })
 

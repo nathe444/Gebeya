@@ -8,8 +8,7 @@ const handleImageUpload = async (req, res) => {
         const result = await uploadImageUtils(url);
         res.json({
             success: true,
-            message: "Image uploaded successfully",
-            result
+            result,
         });
     } catch (error) {
         console.log(error);

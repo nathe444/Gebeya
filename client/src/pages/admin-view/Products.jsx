@@ -43,6 +43,7 @@ const Products = () => {
               setImageFile={setImageFile} 
               uploadedImageURL={uploadedImageURL} 
               setUploadedImageURL={setUploadedImageURL}
+              imageLoading = {imageLoading}
               setImageLoading={setImageLoading} />
 
             <CommonForm 

@@ -1,8 +1,9 @@
 import axios from "axios";
 import { UploadCloudIcon, XIcon } from "lucide-react"
 import { useEffect, useRef } from "react"
+import { Skeleton } from "../ui/skeleton";
 
-function ImageUpload({ imageFile, setImageFile, uploadedImageURL, setUploadedImageURL,setImageLoading }) {
+function ImageUpload({ imageFile, setImageFile, uploadedImageURL, setUploadedImageURL,imageLoading , setImageLoading }) {
     const inputRef = useRef(null);
 
     const handleImageFileChange = (event) => {
@@ -26,11 +27,17 @@ function ImageUpload({ imageFile, setImageFile, uploadedImageURL, setUploadedIma
     }
 
     async function uploadToCloudinary(imageFile){
-        setImageLoading(true)
+        setImageLoading(true);
+        const data = new FormData();
+        data.append('image', imageFile);
         try{
-          const result = await axios.post('http://localhost:5000/api/admin/products/upload-image', imageFile, {
-            }) 
+          const result = await axios.post('http://localhost:5000/api/admin/products/upload-image', data) 
+          console.log(result);
+          if(result){
+            setUploadedImageURL(result.data)
             setImageLoading(false)
+          }
+            
             return result
         } catch(error){
             console.log(error)
@@ -43,6 +50,8 @@ function ImageUpload({ imageFile, setImageFile, uploadedImageURL, setUploadedIma
         }
     },[imageFile])
 
+    console.log('imageLoading' , imageLoading)
+
     return (
         <div>
             <input type="file" id="image-upload" hidden ref={inputRef} onChange={handleImageFileChange}/>
@@ -50,6 +59,7 @@ function ImageUpload({ imageFile, setImageFile, uploadedImageURL, setUploadedIma
 
             {
                 imageFile ? (
+                    imageLoading ? <Skeleton className={'my-2 h-20 w-full bg-slate-300'}/> :
                     <div className='flex items-center justify-between gap-4 mb-4 mt-1 p-4'>
                         <p>{imageFile.name}</p>
                         <XIcon onClick={handleImageFileRemove} className="cursor-pointer"/>

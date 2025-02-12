@@ -3,7 +3,7 @@ import { UploadCloudIcon, XIcon } from "lucide-react"
 import { useEffect, useRef } from "react"
 import { Skeleton } from "../ui/skeleton";
 
-function ImageUpload({ imageFile, setImageFile, uploadedImageURL, setUploadedImageURL,imageLoading , setImageLoading }) {
+function ImageUpload({ imageFile, setImageFile, uploadedImageURL, setUploadedImageURL,imageLoading , setImageLoading, isEditMode }) {
     const inputRef = useRef(null);
 
     const handleImageFileChange = (event) => {
@@ -52,7 +52,7 @@ function ImageUpload({ imageFile, setImageFile, uploadedImageURL, setUploadedIma
 
     return (
         <div>
-            <input type="file" id="image-upload" hidden ref={inputRef} onChange={handleImageFileChange}/>
+            <input type="file" id="image-upload" hidden ref={inputRef} onChange={handleImageFileChange} disabled={isEditMode}/>
             <h1 className='text-md  font-semibold text-center'>Upload an Image</h1>
 
             {
@@ -63,7 +63,7 @@ function ImageUpload({ imageFile, setImageFile, uploadedImageURL, setUploadedIma
                         <XIcon onClick={handleImageFileRemove} className="cursor-pointer"/>
                     </div>
                 ) : (
-                    <div className="border border-dashed border-black/50 rounded-lg p-4 py-6 mb-4 mt-1" onDragOver={handleDragOver} onDrop={handleDrop}>
+                    <div className={`border border-dashed border-black/50 rounded-lg p-4 py-6 mb-4 mt-1 ${isEditMode && 'opacity-50'}`} onDragOver={handleDragOver} onDrop={handleDrop}>
                         <label htmlFor="image-upload" className="cursor-pointer flex flex-col items-center gap-2">
                             <UploadCloudIcon />
                             <p className='text-sm'>Drag and drop or click to upload image</p>

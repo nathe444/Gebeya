@@ -106,8 +106,8 @@ const editProduct = async (req, res)=>{
         product.description = description || product.description;
         product.category = category || product.category;
         product.brand = brand || product.brand;
-        product.price = price || product.price;
-        product.salePrice = salePrice || product.salePrice;
+        product.price = price ===''? 0 : price || product.price;
+        product.salePrice = salePrice ===''? 0 : salePrice || product.salePrice;
         product.totalStock = totalStock || product.totalStock;
 
         await product.save();

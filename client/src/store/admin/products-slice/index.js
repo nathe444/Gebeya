@@ -22,7 +22,7 @@ export const fetchAllProducts = createAsyncThunk('adminProductSlice/fetchAllProd
 )
 
 export const editProduct = createAsyncThunk('adminProductSlice/editProduct',
-    async(id , product)=>{
+    async({id , product})=>{
         const result = await axios.put(`http://localhost:5000/api/admin/products/edit/${id}`,product,{
             headers : {
                 'Content-Type' : 'application/json'

@@ -2,7 +2,7 @@ import axios from "axios";
 import { UploadCloudIcon, XIcon } from "lucide-react"
 import { useEffect, useRef } from "react"
 
-function ImageUpload({ imageFile, setImageFile, uploadedImageURL, setUploadedImageURL }) {
+function ImageUpload({ imageFile, setImageFile, uploadedImageURL, setUploadedImageURL,setImageLoading }) {
     const inputRef = useRef(null);
 
     const handleImageFileChange = (event) => {
@@ -26,9 +26,11 @@ function ImageUpload({ imageFile, setImageFile, uploadedImageURL, setUploadedIma
     }
 
     async function uploadToCloudinary(imageFile){
+        setImageLoading(true)
         try{
           const result = await axios.post('http://localhost:5000/api/admin/products/upload-image', imageFile, {
             }) 
+            setImageLoading(false)
             return result
         } catch(error){
             console.log(error)

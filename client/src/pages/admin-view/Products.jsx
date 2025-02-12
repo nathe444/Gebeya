@@ -13,6 +13,7 @@ const Products = () => {
 
   const [imageFile , setImageFile] = useState(null);
   const [uploadedImageURL , setUploadedImageURL] = useState(null);
+  const [imageLoading , setImageLoading] = useState(false)
 
   function onSubmit(event){
     event.preventDefault();
@@ -37,7 +38,12 @@ const Products = () => {
               </SheetTitle>
             </SheetHeader>
 
-            <ImageUpload imageFile={imageFile} setImageFile={setImageFile} uploadedImageURL={uploadedImageURL} setUploadedImageURL={setUploadedImageURL} />
+            <ImageUpload 
+              imageFile={imageFile} 
+              setImageFile={setImageFile} 
+              uploadedImageURL={uploadedImageURL} 
+              setUploadedImageURL={setUploadedImageURL}
+              setImageLoading={setImageLoading} />
 
             <CommonForm 
               formControls = {addProductFormElements}

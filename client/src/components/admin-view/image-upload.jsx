@@ -34,7 +34,7 @@ function ImageUpload({ imageFile, setImageFile, uploadedImageURL, setUploadedIma
           const result = await axios.post('http://localhost:5000/api/admin/products/upload-image', data) 
           console.log(result);
           if(result){
-            setUploadedImageURL(result.data)
+            setUploadedImageURL(result.data.result.secure_url)
             setImageLoading(false)
           }
             
@@ -49,8 +49,6 @@ function ImageUpload({ imageFile, setImageFile, uploadedImageURL, setUploadedIma
             uploadToCloudinary(imageFile)
         }
     },[imageFile])
-
-    console.log('imageLoading' , imageLoading)
 
     return (
         <div>

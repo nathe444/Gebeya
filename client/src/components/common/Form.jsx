@@ -6,7 +6,6 @@ import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
 
 const CommonForm = ({ formControls , formData , setFormData, onSubmit ,buttonText}) => {
-
     const renderInputsByComponentType = (controlItem ) => {
         let element = null;
         let value = formData[controlItem.name] || '';

@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from"@reduxjs/toolkit";
+import axios from 'axios';
 
 
 export const addProduct = createAsyncThunk('adminProductSlice/addProduct',
@@ -58,6 +59,16 @@ const AdminProductSlice = createSlice({
             state.loading = true
         })
         .addCase(fetchAllProducts.rejected,(state,action)=>{
+            state.loading = false
+        })
+        .addCase(addProduct.fulfilled,(state,action)=>{
+            state.products.push(action.payload.product)
+            state.loading = false
+        })
+        .addCase(addProduct.pending,(state,action)=>{
+            state.loading = true
+        })
+        .addCase(addProduct.rejected,(state,action)=>{
             state.loading = false
         })
     }

@@ -5,7 +5,7 @@ import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
 
-const CommonForm = ({ formControls , formData , setFormData, onSubmit ,buttonText, isBtnDisabled}) => {
+const CommonForm = ({ formControls , formData , setFormData, onSubmit ,buttonText, Disabled}) => {
     const renderInputsByComponentType = (controlItem ) => {
         let element = null;
         let value = formData[controlItem.name] || '';
@@ -75,7 +75,7 @@ const CommonForm = ({ formControls , formData , setFormData, onSubmit ,buttonTex
                     }
                 </div>)}
             </div>
-            <Button type='submit' disabled={isBtnDisabled} className='w-full mt-2'>{buttonText || 'Submit'}</Button>
+            <Button type='submit' disabled={Disabled} className='w-full mt-2'>{buttonText || 'Submit'}</Button>
         </form>
     )
 }

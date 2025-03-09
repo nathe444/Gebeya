@@ -40,6 +40,7 @@ const Register = () => {
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}
+        Disabled = {submitting}
       />
 
     </div>

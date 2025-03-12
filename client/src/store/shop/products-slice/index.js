@@ -19,9 +19,24 @@ export const fetchAllFilteredProducts = createAsyncThunk(
   }
 );
 
+export const getProductDetails = createAsyncThunk(
+  "shop/getProductDetails",
+  async (id) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/shop/products/get/${id}`
+      );
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+)
+
 const initialState = {
   loading: false,
   productList: [],
+  productDetails: null,
   error: null,
 };
 
@@ -43,6 +58,18 @@ const ShopProductSlice = createSlice({
         state.loading = false;
         console.log(action.payload);
         state.productList = action.payload.filteredProducts;
+      })
+      .addCase(getProductDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getProductDetails.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
+      .addCase(getProductDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.productDetails = action.payload.product;
       });
   },
 });

@@ -1,12 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
 
-function ShoppingProductTile({ product }) {
+function ShoppingProductTile({ product , handleGetProductDetails }) {
   return (
-    <Card>
-      <div>
+    <Card className="cursor-pointer">
+      <div onClick={() => handleGetProductDetails(product?._id)}> 
         <div className="relative">
           <img
             src={product?.image}
@@ -22,7 +22,7 @@ function ShoppingProductTile({ product }) {
           )}
           <div>
             <CardContent className="px-8 py-4">
-              <h2 className="text-xl font-bold mb-2">{product?.title}</h2>
+                <h2 className="text-xl font-bold mb-2">{product?.title}</h2>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-muted-foreground">
                   {product?.category}

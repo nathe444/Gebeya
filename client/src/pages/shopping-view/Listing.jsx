@@ -10,11 +10,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
 import { ArrowUpDownIcon } from "lucide-react";
-import { fetchAllFilteredProducts } from "@/store/shop/products-slice";
+import { fetchAllFilteredProducts, getProductDetails } from "@/store/shop/products-slice";
 import { useDispatch, useSelector } from "react-redux";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { useEffect, useState } from "react";
-import { createSearchParams, useSearchParams } from "react-router-dom";
+import {  useSearchParams } from "react-router-dom";
+import ProductDetails from "./ProductDetails";
 
 function createSearchParamsHelper(filters) {
   const queryParams = [];
@@ -30,10 +31,11 @@ function createSearchParamsHelper(filters) {
 
 const ShoppingListing = () => {
   const dispatch = useDispatch();
-  const { productList } = useSelector((state) => state.shopProducts);
+  const { productList , productDetails } = useSelector((state) => state.shopProducts);
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParmas, setSearchParams] = useSearchParams();
+  const [open , setOpen] = useState(false);
 
   useEffect(() => {
     setFilters(JSON.parse(sessionStorage.getItem("filters")) || {});
@@ -52,6 +54,13 @@ const ShoppingListing = () => {
   function handleSort(value) {
     setSort(value);
   }
+
+  useEffect(()=>{
+    if(productDetails){
+      setOpen(true)
+    }
+    
+  },[productDetails])
 
   function handleFilter(getSectionId, getCurrentOption) {
     console.log(getSectionId, getCurrentOption);
@@ -74,7 +83,12 @@ const ShoppingListing = () => {
     sessionStorage.setItem("filters", JSON.stringify(cpyFilters));
   }
 
-  console.log(filters);
+  function handleGetProductDetails(id) {
+    dispatch(getProductDetails(id))
+  }
+
+  console.log(productDetails)
+
 
   return (
     <div className="grid cols-1 md:grid-cols-[200px_1fr] p-4 gap-6">
@@ -114,12 +128,13 @@ const ShoppingListing = () => {
           {productList.map((product) => {
             return (
               <div key={product._id}>
-                <ShoppingProductTile product={product} />
+                <ShoppingProductTile handleGetProductDetails={handleGetProductDetails} product={product} setOpen={setOpen} />
               </div>
             );
           })}
         </div>
       </div>
+      <ProductDetails open={open} setOpen={setOpen} productDetails={productDetails}/>
     </div>
   );
 };

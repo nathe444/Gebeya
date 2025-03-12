@@ -3,13 +3,17 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchAllFilteredProducts = createAsyncThunk(
   "shop/fetchALlFilteredProducts",
-  async () => {
+  async ({filters , sort}) => {
     try {
+      const query = new URLSearchParams({
+        ...filters ,
+        sortBy : sort
+    })
       const response = await axios.get(
-        "http://localhost:5000/api/shop/products/get"
+        `http://localhost:5000/api/shop/products/get?${query}`
       );
       return response.data;
-    } catch (err) {
+    } catch (err) { 
       console.log(err);
     }
   }

@@ -40,8 +40,8 @@ const ShoppingListing = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchAllFilteredProducts());
-  }, []);
+    dispatch(fetchAllFilteredProducts({filters , sort}));
+  }, [filters , sort]);
 
   useEffect(() => {
     if (filters && Object.keys(filters).length > 0) {
